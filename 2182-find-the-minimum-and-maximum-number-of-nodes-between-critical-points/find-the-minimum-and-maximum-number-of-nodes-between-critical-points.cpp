@@ -11,41 +11,42 @@
 class Solution {
 public:
     vector<int> nodesBetweenCriticalPoints(ListNode* head) {
-        vector<int> result(2, -1);  // Initialize result with [-1, -1]
+        vector<int> result(2, -1); // Initialize result with [-1, -1]
 
         if (!head || !head->next || !head->next->next) {
-            return result;  // Less than 3 nodes, no critical points possible
+            return result; // Less than 3 nodes, no critical points possible
         }
 
-        vector<int> criticalPoints;  // Store positions of critical points
-        ListNode* slow = head;
-        ListNode* current = head->next;
-        ListNode* fast = head->next->next;
-        int position = 1;  // Current node position in the list
+        int firstPos = -1, lastPos = -1, minDistance = INT_MAX;
+        int pos = 1; // Current position
+        ListNode* prev = head;
+        ListNode* curr = head->next;
+        ListNode* next = curr->next;
 
-        while (fast) {
-            if ((current->val > slow->val && current->val > fast->val) ||
-                (current->val < slow->val && current->val < fast->val)) {
-                criticalPoints.push_back(position);
+        while (next) {
+            if ((curr->val > prev->val && curr->val > next->val) || 
+                (curr->val < prev->val && curr->val < next->val)) {
+                
+                if (firstPos == -1) {
+                    firstPos = pos;
+                } else {
+                    minDistance = min(minDistance, pos - lastPos);
+                }
+                lastPos = pos;
             }
-            slow = current;
-            current = fast;
-            fast = fast->next;
-            position++;
+
+            prev = curr;
+            curr = next;
+            next = next->next;
+            pos++;
         }
 
-        if (criticalPoints.size() < 2) {
-            return result;  // Fewer than 2 critical points
+        if (firstPos == lastPos || firstPos == -1) {
+            return result; // Fewer than two critical points
         }
-
-        int minDistance = INT_MAX;
-        for (size_t i = 1; i < criticalPoints.size(); ++i) {
-            minDistance = min(minDistance, criticalPoints[i] - criticalPoints[i - 1]);
-        }
-        int maxDistance = criticalPoints.back() - criticalPoints.front();
 
         result[0] = minDistance;
-        result[1] = maxDistance;
+        result[1] = lastPos - firstPos;
 
         return result;
     }
