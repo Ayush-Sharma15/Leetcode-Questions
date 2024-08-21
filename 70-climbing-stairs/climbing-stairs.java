@@ -1,31 +1,21 @@
 class Solution {
-    public static int helper(int n, int[] dp){
-        if(n == 0)
-        return 1;
-
-        if(dp[n] != -1)
-        return dp[n];
-
-        int left = helper(n - 1, dp);
-        int right = 0;
-        if(n > 1)
-        right = helper(n - 2, dp);
-
-        return dp[n] = right + left;
-    }
     public int climbStairs(int n) {
         int[] dp = new int[n + 1];
-        dp[0] = 1;
+        int pre1 = 1;
+        int pre2 = 0;
+        int curr = 0;
 
         for(int i = 1; i <= n; i++){
-            int left = dp[i - 1];
+            int left = pre1;
             int right = 0;
             if(i > 1)
-            right = dp[i - 2];
+            right = pre2;
 
-            dp[i] = left + right;
+            curr = left + right;
+            pre2 = pre1;
+            pre1 = curr;
         }
 
-        return dp[n];
+        return pre1;
     }
 }
