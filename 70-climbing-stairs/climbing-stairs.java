@@ -6,14 +6,14 @@ class Solution {
         if(n==2){
             return 2;
         }
-        int []dp=new int[n+1];
+        int c=0;
         int p1=1;
         int p2=2;
         for(int i=3;i<n+1;i++){
-            dp[i]=p1+p2;
+            c=p1+p2;
             p1=p2;
-            p2=dp[i];
+            p2=c;
         }
-        return dp[n];
+        return c;
     }
 }
