@@ -5,14 +5,18 @@ class Solution {
             return;
         }
         for(int i=0;i<nums.size();i++){
-            if(i > 0 && nums[i]==nums[i-1] && !freq[i - 1]) continue;
-            if(!freq[i]){
+            // 0 1 2
+            // true false true
+            // 1 1 2
+            // 1 2 1
+            // 2 1 
+            if(freq[i] ||(i > 0 && nums[i]==nums[i-1] && !freq[i - 1])) continue;
+            
                 freq[i]=1;
                 ds.push_back(nums[i]);
                 permute( nums, ds, ans, freq);
                 freq[i]=0;
                 ds.pop_back();
-        }
         }
     }
     
@@ -28,4 +32,5 @@ public:
 
         return ans;
     }
+    
 };
