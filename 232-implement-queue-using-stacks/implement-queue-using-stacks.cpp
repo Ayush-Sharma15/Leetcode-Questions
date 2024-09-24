@@ -1,36 +1,45 @@
 class MyQueue {
 public:
-stack<int>son1,son2;
-    MyQueue() {
+stack<int>st;
+    stack<int>helper;
+    // MyQueue() {
         
+    // }
+    
+    void push(int x) { // O(1)
+        st.push(x);
     }
     
-    void push(int x) {
-        while(!son1.empty())
-        {
-        son2.push(son1.top());
-        son1.pop();
+    int pop() { // O(n)
+        while(st.size()>0){
+            helper.push(st.top());
+            st.pop();
         }
-      son1.push(x);
-      while(!son2.empty())
-      {
-        son1.push(son2.top());
-        son2.pop();
+        int x=helper.top();
+        helper.pop();
+        while(helper.size()>0){
+            st.push(helper.top());
+            helper.pop();
         }
+        return x;
     }
     
-    int pop() {
-        int temp=son1.top();
-      son1.pop();
-      return temp;
+    int peek() { // O(n)
+        while(st.size()>0){
+            helper.push(st.top());
+            st.pop();
+        }
+        int x=helper.top();
+        while(helper.size()>0){
+            st.push(helper.top());
+            helper.pop();
+        }
+        return x;
     }
     
-    int peek() {
-        return son1.top();
-    }
-    
-    bool empty() {
-        return son1.empty();
+    bool empty() {  // O(1)
+       if(st.size()==0) return true;
+       else return false; 
     }
 };
 
