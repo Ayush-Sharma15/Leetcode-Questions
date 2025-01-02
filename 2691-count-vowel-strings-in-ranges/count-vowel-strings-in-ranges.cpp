@@ -2,18 +2,16 @@ class Solution {
 public:
     vector<int> vowelStrings(vector<string>& words,
                              vector<vector<int>>& queries) {
-        int n = words.size(), m=queries.size();
+         unordered_set<char> vowels = {'a', 'e', 'i', 'o', 'u'};
+
+        int n = words.size(), m = queries.size();
         vector<int> v(n, 0);
         for (int i = 0; i < n; i++) {
             int t = words[i].length();
-            if ((words[i][0] == 'a' || words[i][0] == 'e' || words[i][0] == 'i' || 
-                 words[i][0] == 'o' || words[i][0] == 'u') &&
-                (words[i][t - 1] == 'a' || words[i][t - 1] == 'e' || words[i][t - 1] == 'i' || 
-                 words[i][t - 1] == 'o' || words[i][t - 1] == 'u')) {
+            if (vowels.count(words[i][0]) && vowels.count(words[i][t - 1])) {
                 v[i] = 1;
             }
         }
-        
     vector<int> prefix(n, 0);
     prefix[0] = v[0];
     for (int i = 1; i < n; ++i) {
