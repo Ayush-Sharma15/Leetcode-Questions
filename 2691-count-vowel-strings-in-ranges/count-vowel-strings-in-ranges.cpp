@@ -13,8 +13,7 @@ public:
                 v[i] = 1;
             }
         }
-        for(int i=0;i<v.size();i++)
-        cout<<v[i];
+        
     vector<int> prefix(n, 0);
     prefix[0] = v[0];
     for (int i = 1; i < n; ++i) {
